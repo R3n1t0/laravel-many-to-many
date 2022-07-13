@@ -1,6 +1,6 @@
 <?php
 
-use App\Posts;
+use App\Post;
 use App\Tag;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +15,7 @@ class PostsTagsTableSeeder extends Seeder
     {
         for ($i=0; $i < 20 ; $i++) {
 
-            $post = Posts::inRandomOrder()->first();
+            $post = Post::inRandomOrder()->first();
             $tag_id = Tag::inRandomOrder()->first()->id;
 
             $post->tags()->attach($tag_id);

@@ -2,7 +2,7 @@
 
 use App\Category;
 use Illuminate\Database\Seeder;
-use App\Posts;
+use App\Post;
 
 class UpdatePostsSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class UpdatePostsSeeder extends Seeder
      */
     public function run()
     {
-        $posts = Posts::all();
+        $posts = Post::all();
         foreach ($posts as $post) {
             $category_id = Category::inRandomOrder()->first()->id;
 

@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
-use App\Posts;
+use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -17,9 +18,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Posts::orderBy('id', 'desc')->paginate(5);
+        $posts = Post::orderBy('id', 'desc')->paginate(5);
         $categories = Category::all();
-        return view('admin.posts.index', compact('posts', 'categories'));
+        return view('admin.posts.index', compact('posts', 'categories', ));
     }
 
     /**
@@ -42,8 +43,8 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $data = $request->all();
-        $new_post = new Posts();
-        $data['slug'] = Posts::generateSlug($data['title']);
+        $new_post = new Post();
+        $data['slug'] = Post::generateSlug($data['title']);
         $new_post->fill($data);
         $new_post->save();
 
@@ -59,7 +60,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Posts::find($id);
+        $post = Post::find($id);
         return view('admin.posts.show', compact('post'));
     }
 
@@ -71,7 +72,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Posts::find($id);
+        $post = Post::find($id);
         $categories = Category::all();
         return view('admin.posts.edit', compact('post', 'categories'));
     }
@@ -83,10 +84,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, Posts $post)
+    public function update(PostRequest $request, Post $post)
     {
         $data = $request->all();
-        $data['slug'] = Posts::generateSlug($data['title']);
+        $data['slug'] = Post::generateSlug($data['title']);
         $post->update($data);
 
         return redirect()->route('admin.post.show', $post);
@@ -99,7 +100,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Posts $post)
+    public function destroy(Post $post)
     {
         $post -> delete();
         return redirect()->route('admin.post.index');
