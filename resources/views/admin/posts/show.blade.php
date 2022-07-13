@@ -5,8 +5,14 @@
     <h3>Titolo: {{ $post -> title}}</h3>
 
     @if ($post -> category)
-        <h4>Ctegoria: {{ $post -> category->name }}</h4>
+        <h4>Categoria: {{ $post -> category->name }}</h4>
     @endif
+
+    @forelse ($post->tags as $tag)
+        <h4>Tags: {{ $tag -> name }}</h4>
+    @empty
+        -
+    @endforelse
 
     <h5>Contenuto: </h5>
     <p>{{ $post -> content}}</p>

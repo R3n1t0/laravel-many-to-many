@@ -10,7 +10,6 @@
             <th scope="col">ID</th>
             <th scope="col">Titolo</th>
             <th scope="col">Categoria</th>
-            <th scope="col">Contenuto</th>
             <th scope="col">Tags</th>
             <th scope="col">Azioni</th>
           </tr>
@@ -21,12 +20,13 @@
                     <td>{{ $post -> id }}</td>
                     <td>{{ $post -> title }}</td>
                     <td>{{ $post -> category ? $post -> category->name : '-' }}</td>
-                    <td>{{ $post -> content }}</td>
-                    @forelse ($post->tags as $tag)
-                        <td>{{ $tag->name }}</td>
-                    @empty
-                        -
-                    @endforelse
+                    <td>
+                        @forelse ($post->tags as $tag)
+                            {{ $tag -> name }}
+                        @empty
+                            -
+                        @endforelse
+                    </td>
                     <td>
                         <div class="buttons d-flex">
                             <a class="btn btn-info" href="{{ route('admin.post.show', $post)}}">MOSTRA</a>
